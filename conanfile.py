@@ -41,9 +41,9 @@ class VcConan(ConanFile):
                   destination=self._source_subfolder, strip_root=True)
 
     def _patch_sources(self):
-        tools.replace_in_file(os.path.join(self._source_subfolder, "CMakeLists.txt"),
-                              "CMAKE_SOURCE_DIR",
-                              "CMAKE_CURRENT_SOURCE_DIR")
+        cmakelists = os.path.join(self._source_subfolder, "CMakeLists.txt")
+        tools.replace_in_file(cmakelists, "CMAKE_SOURCE_DIR", "CMAKE_CURRENT_SOURCE_DIR")
+        tools.replace_in_file(cmakelists, "AddCompilerFlag(\"-fPIC\" CXX_FLAGS libvc_compile_flags)", "")
 
     def _configure_cmake(self):
         if self._cmake:
